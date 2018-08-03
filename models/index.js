@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize');
-const db = new Sequelize('postgres://localhost:5432/wikistack');
+const db = new Sequelize(
+  'postgres://localhost:5432/wikistack'
+  //,{logging: false}}
+);
 const slugify = require('sequelize-slugify');
 
 //Page model
@@ -34,7 +37,10 @@ const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
     allowNull: false,
+    validate: {
+      isEmail: true,
+    },
   },
 });
 
-module.exports = { Page, User };
+module.exports = { db };

@@ -1,4 +1,4 @@
-const { db } = require('./models');
+const { db } = require('./models/index.js');
 const morgan = require('morgan');
 const express = require('express');
 const layout = require('./views/layout.js');
@@ -21,9 +21,15 @@ app.get('/', (req, res) => {
   res.send(layout(''));
 });
 
-// Server config
-const PORT = 3000;
+const init = async () => {
+  await db.sync({ force: true });
 
-app.listen(PORT, () => {
-  console.log(`App listening in port ${PORT}`);
-});
+  // Server config
+  const PORT = 3000;
+
+  app.listen(PORT, () => {
+    console.log(`App listening in port ${PORT}`);
+  });
+};
+
+init();
